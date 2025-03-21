@@ -1,0 +1,165 @@
+/* General Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #0F5D47; /* Creamy Off-White */
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  color: #FAF3DD; /* Espresso Brown */
+  overflow-y: scroll;
+  overflow-x: hidden;
+  align-items: center;
+}
+
+/* Navigation Bar */
+.navbar {
+  width: 90vw;
+  height: 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0F5D47; /* Warm Apricot */
+  padding:0px 100px;
+  color: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin: 0;
+}
+
+.navbar ul li {
+  display: inline;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.navbar ul li a:hover {
+  background-color: #D72638; /* Deep Cranberry Red */
+  color: white;
+}
+
+/* Hero Section */
+.hero-section {
+  align-items: center;
+  padding: 100px;
+  background: url('C:/Users/Riddhi/Desktop/Course material- 3rd year/Winter Semester/CSE519/Assignments+Project/Project/platepal/platepal/src/styles/foodtable_stock.png') no-repeat center center/cover;
+  color: white;
+  text-align: center;
+  
+}
+
+.hero-section h2 {
+  font-size: 42px;
+  color: #FAF3DD;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.hero-section p {
+  font-size: 18px;
+  max-width: 600px;
+  margin: 0 auto;
+  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.2);
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  background-color: #ff9800;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.2rem;
+  text-decoration: none;
+  width: 180px;
+}
+
+.card:hover {
+  background-color: #ffb950;
+  transform: scale(1.1) ;
+  transition: 0.3s;
+  color: #0F5D47;
+}
+
+/* Call-to-Action Button */
+.cta-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background-color: #A7C957; /* Fresh Sage Green */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.cta-button:hover {
+  background-color: #D72638; /* Deep Cranberry Red */
+}
+
+.footer {
+  width: 100vw;
+  max-width: 100%;
+  align-items: end;
+  background-color: #1b4d3e;
+  padding: 10px 30px;
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 200px;
+}
+
+.footer-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .options {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .footer-content {
+      flex-direction: column;
+      text-align: center;
+  }
+}
+.icon {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}

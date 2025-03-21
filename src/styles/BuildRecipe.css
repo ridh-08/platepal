@@ -1,0 +1,198 @@
+/* General Page Styling */
+body {
+    background-color: #0F5D47; /* Deep Emerald Teal */
+    font-family: 'Source Sans Pro', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Centered Recipe Form */
+.build-recipe {
+    width: 75vw;
+    background: #FFA630; /* Soft Sage Green */
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+/* Headings */
+h1, h2, h3 {
+    color: #FFCC4D; /* Golden Mango Yellow */
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Standardized Input Fields */
+input[type="text"], 
+input[type="number"], 
+select, 
+textarea {
+    width: 100%;
+    height: 50px;
+    padding: 12px;
+    border: 2px solid #6B4226; /* Warm Cocoa Brown */
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #FAF3DD; /* Toasted Almond Cream */
+    color: #333;
+    transition: 0.3s ease-in-out;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+
+input:focus, 
+textarea:focus {
+    border-color: #FFCC4D;
+    background: #FFE6C7;
+}
+
+/* Steps Textarea */
+.step-container textarea {
+    height: 120px;
+    resize: vertical;
+    overflow-y: auto;
+}
+
+/* Quantity and Unit Fields Side by Side */
+.ingredient-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.quantity-unit-container {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+
+.quantity-unit-container input,
+.quantity-unit-container select {
+    flex: 1;
+    min-width: 45%;
+}
+
+/* Button Container for Spacing */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+/* Improved Button Styling */
+button {
+    border: none;
+    padding: 16px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+}
+
+/* Primary Action Buttons */
+.add-ingredient-button,
+.add-step-button {
+    background-color: #FFCC4D; /* Golden Mango Yellow */
+    color: #2E2E2E;
+    flex: 1;
+    margin: 10px 0;
+}
+
+.add-ingredient-button:hover,
+.add-step-button:hover {
+    background-color: #E6B840;
+}
+
+/* Remove Button */
+.remove-button {
+    background-color: #D97742; /* Sunset Orange */
+    color: white;
+    margin: 10px 0;
+}
+
+.remove-button:hover {
+    background-color: #B96536;
+}
+
+/* Print and Preview Buttons */
+.print-recipe-button,
+.preview-recipe-button {
+    background-color: #6B4226; /* Warm Cocoa Brown */
+    color: #FAF3DD;
+    width: 35%;
+    margin: 10px 0;
+}
+
+.print-recipe-button:hover,
+.preview-recipe-button:hover {
+    background-color: #8A5A3A;
+}
+
+/* Dropzone Styling */
+.dropzone {
+    border: 2px dashed #FFCC4D;
+    padding: 30px;
+    border-radius: 12px;
+    background: #FAF3DD;
+    text-align: center;
+    font-size: 14px;
+    color: #6B4226;
+    transition: 0.3s;
+    margin: 30px 0;
+}
+
+.dropzone:hover {
+    background: #FFCC4D;
+    color: #2E2E2E;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    .build-recipe {
+        width: 90vw;
+    }
+    .ingredient-container, 
+    .step-container,
+    .quantity-unit-container {
+        flex-direction: column;
+    }
+    .button-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .print-recipe-button,
+    .preview-recipe-button {
+        width: 100%;
+    }
+}
+
+/* Recipe Preview */
+.recipe-preview {
+    text-align: left;
+    padding-top: 10px;
+}
+
+.recipe-preview h2,
+.recipe-preview h3 {
+    font-family: 'Playfair Display', serif;
+    color: white;
+}
+
+.recipe-preview p,
+.recipe-preview ul,
+.recipe-preview ol {
+    font-family: 'Source Sans Pro', sans-serif;
+    color: #FAF3DD;
+}

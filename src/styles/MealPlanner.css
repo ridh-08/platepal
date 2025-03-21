@@ -1,0 +1,228 @@
+/* General Styles */
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    background-color: #0F5D47; /* Deep Emerald Teal */
+    margin: 0;
+    padding: 0;
+    color: #FAF3DD; /* Toasted Almond Cream */
+    line-height: 1.8;
+}
+/* Navbar */
+.recipe-page-navbar {
+    width: 97vw;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0F5D47; /* Green */
+    padding: 0 20px;
+    color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+/* Home Link */
+.nav-home {
+    font-size: 14px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    left: 50px;
+}
+
+/* Center 'PlatePal' */
+.nav-title {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Styles */
+h1, h3  {
+    color: #FAF3DD; /* Golden Mango Yellow */
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+h4 {
+    font-size: large;
+    color: #FAF3DD; /* Golden Mango Yellow */
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+h2 {
+    color: #6B4226; /* Sun-Kissed Orange */
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+/* Filters Region Styles */
+.filters {
+    background: linear-gradient(135deg, #1A936F, #4F9D69); /* Soft Sage Green Gradient */
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.remove-button {
+    background-color: #FF9F1C; /* Tangerine Orange */
+    color: #FAF3DD;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+  
+.remove-button:hover {
+    background-color: #E63946; /* Ripe Berry Red */
+}
+  
+/* Input and Select Styles */
+input[type="text"], select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #6B4226; /* Warm Cocoa Brown */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease-in-out;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #FFA630; /* Sun-Kissed Orange */
+    outline: none;
+    box-shadow: 0 0 12px rgba(255, 166, 48, 0.5);
+}
+
+/* Button Styles */
+.meal-button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    background-color: #FFCC4D; /* Golden Mango Yellow */
+    color: #2E2E2E; /* Charcoal Black */
+    font-size: 1rem;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: bolder;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.meal-button:hover {
+    background-color: #FFA630; /* Sun-Kissed Orange */
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Cookbook Styles */
+.cookbook {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.meal-card {
+    border: 1px solid #E63946; /* Ripe Berry Red */
+    border-radius: 12px;
+    padding: 18px;
+    width: 200px;
+    background-color: #FFA630; /* Sun-Kissed Orange */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    font-family: 'Poppins', sans-serif;
+}
+
+.meal-card h3{
+    color:white;
+    font-size: x-large;
+}
+
+.meal-card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Meal Item Styles */
+.meal-item {
+    width: 160px;
+    
+    background-color: #ffffff;
+    border: 1px solid #6B4226; /* Warm Cocoa Brown */
+    color:#2E2E2E;
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 12px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+    font-family: 'Poppins', sans-serif;
+}
+
+.meal-item:hover {
+    transform: scale(1.0);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.meal-item h3 {
+    font-size: 1.4em;
+    margin: 0;
+    color: #2E2E2E; /* Toasted Almond Cream */
+    font-family: 'Playfair Display', serif;
+}
+
+.meal-item h4 {
+    font-size: 1.4em;
+    margin: 0;
+    color: #2E2E2E; /* Toasted Almond Cream */
+    font-family: 'Playfair Display', serif;
+}
+
+/* Grocery List Styles */
+.grocery-list {
+    margin-top: 20px;
+    background-color: #FAF3DD; /* Toasted Almond Cream */
+    color: #2E2E2E;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif;
+    text-align: left;
+}
+
+.grocery-list li {
+    margin: 8px 0;
+    padding: 8px;
+    border-bottom: 1px solid #6B4226;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.grocery-list li:hover {
+    background-color: #1A936F; /* Ripe Berry Red */
+    color: #FAF3DD;
+    border-radius: 5px;
+}
+
+.meal-slot h4{
+    color:#6B4226;
+    font-size: large;
+}
