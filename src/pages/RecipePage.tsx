@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { jsPDF } from "jspdf";
 import "../styles/RecipePage.css";
+import { FaWhatsapp } from "react-icons/fa";
 
 interface Recipe {
     idMeal: string;
@@ -41,17 +43,41 @@ const RecipePage: React.FC = () => {
         fetchRecipe();
     }, [id]);
 
+    const handlePrintPDF = () => {
+        if (!recipe) return;
+
+        const doc = new jsPDF();
+        doc.setFontSize(20);
+        doc.text(recipe.strMeal, 10, 10);
+        doc.setFontSize(12);
+        doc.text(`Instructions: ${recipe.strInstructions}`, 10, 20);
+
+        // Add ingredients
+        doc.text("Ingredients:", 10, 40);
+        Array.from({ length: 5 }, (_, i) => i + 1).forEach(i => {
+            if (recipe[`strIngredient${i}`] && recipe[`strMeasure${i}`]) {
+                doc.text(`${recipe[`strMeasure${i}`]} ${recipe[`strIngredient${i}`]}`, 10, 40 + (i * 10));
+            }
+        });
+
+        doc.save(`${recipe.strMeal}.pdf`);
+    };
+
     if (!recipe) return <p>Loading...</p>;
 
     return (
         <div className="recipe-page-container">
-    {/* Navbar */}
-    <header className="recipe-page-navbar">
-        <Link to="/" className="nav-home">← Return To Home</Link>
-        <h1 className="nav-title">PlatePal</h1>
-        <button className="user-button">User</button>
-    </header>
-
+            {/* Navbar */}
+            <nav className="navbar">
+        <img src='src/pages/platepal_logo.png' alt="PlatePal Logo" className="logo" width="133px" height="30px" /> {/* Logo added here */}
+        <h3>   </h3>
+        <ul>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/build-recipe">Build a Recipe</Link></li>
+          <li><Link to="/meal-planner">Meal Planner</Link></li>
+          <li><Link to="/dine-like-a-local">Dine Like a Local</Link></li>
+        </ul>
+      </nav>
 
             {/* Main Recipe Info */}
             <div className="recipe-main-info">
@@ -88,7 +114,7 @@ const RecipePage: React.FC = () => {
                         <div className="share-options">
                             <p>📲 WhatsApp</p>
                             <p>🔗 Copy Link</p>
-                            <p>🖨️ Print as PDF</p>
+                            <p onClick={handlePrintPDF} style={{ cursor: 'pointer' }}>🖨️ Print as PDF</p>
                         </div>
                     </section>
                 </div>
@@ -98,11 +124,9 @@ const RecipePage: React.FC = () => {
                     <section className="instructions-section">
                         <h3>Instructions</h3>
                         <ol>
-                            <li>Mix the ingredients: In a large bowl, combine the sugar, flour, butter, and choco chips.</li>
-                            <li>Stir thoroughly: Mix in a clockwise direction until the dough is smooth.</li>
-                            <li>Knead the dough: Form small balls by kneading the dough gently.</li>
-                            <li>Prepare for baking: Place the dough balls on a tray.</li>
-                            <li>Bake to perfection: Bake in a preheated oven at 350°F for 20 minutes until golden brown.</li>
+                            {recipe.strInstructions.split('\n').map((instruction, index) => (
+                                <li key={index}>{instruction}</li>
+                            ))}
                         </ol>
                     </section>
 
@@ -121,9 +145,7 @@ const RecipePage: React.FC = () => {
                 <p>© 2025 PlatePal. All Rights Reserved.</p>
             </footer>
             <div className="green-block"></div>
-
         </div>
-        
     );
 };
 

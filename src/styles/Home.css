@@ -13,17 +13,40 @@ body {
 
 /* Navigation Bar */
 .navbar {
-  width: 90vw;
-  height: 10%;
+ 
+  height: 10vh;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Space between logo and links */
+  
   align-items: center;
   background: #0F5D47; /* Warm Apricot */
-  padding:0px 100px;
+  padding: 0px 100px;
   color: white;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  
 }
 
+.logo-container {
+  display: flex;
+  align-items: center; /* Center logo and text vertically */
+}
+
+.logo {
+  min-width: 133px;
+  min-height: 30px;
+  margin-right: 0; /* Remove margin to place text directly next to logo */
+  
+}
+
+h3 {
+  color: #FAF3DD; /* Golden Mango Yellow */
+  font-size: xx-large;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  text-align: left; /* Align text to the left */
+  margin-left: 0; /* Remove margin to place text directly next to logo */
+}
+
+/* Navigation Links */
 .navbar ul {
   list-style: none;
   display: flex;
@@ -32,11 +55,17 @@ body {
 }
 
 .navbar ul li {
-  display: inline;
+  display: flex;
+  align-items: end;
+  margin-right: 10px;
+  margin-left: auto;
+
 }
 
 .navbar ul li a {
   text-decoration: none;
+  text-align: right;
+  align-items: end;
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -54,10 +83,9 @@ body {
 .hero-section {
   align-items: center;
   padding: 100px;
-  background: url('C:/Users/Riddhi/Desktop/Course material- 3rd year/Winter Semester/CSE519/Assignments+Project/Project/platepal/platepal/src/styles/foodtable_stock.png') no-repeat center center/cover;
+  background: url('src/styles/foodtable_stock.png') no-repeat center center/cover;
   color: white;
   text-align: center;
-  
 }
 
 .hero-section h2 {
@@ -83,6 +111,7 @@ body {
 
 .card {
   background-color: #ff9800;
+  opacity: 85%;
   color: white;
   padding: 15px 20px;
   border-radius: 8px;
@@ -94,7 +123,7 @@ body {
 
 .card:hover {
   background-color: #ffb950;
-  transform: scale(1.1) ;
+  transform: scale(1.1);
   transition: 0.3s;
   color: #0F5D47;
 }
@@ -149,15 +178,16 @@ body {
 /* Responsive */
 @media (max-width: 768px) {
   .options {
-      flex-direction: column;
-      align-items: center;
+    flex-direction: column;
+    align-items: center;
   }
 
   .footer-content {
-      flex-direction: column;
-      text-align: center;
+    flex-direction: column;
+    text-align: center;
   }
 }
+
 .icon {
   width: 50px;
   height: 50px;

@@ -6,13 +6,21 @@ import jsPDF from "jspdf";
 import "jspdf-autotable"; 
 import "../styles/MealPlanner.css";
 import { Link } from "react-router-dom";
+import { FaSearch } from "react-icons/fa"; 
 
-const categories = ["Breakfast", "Lunch", "Dinner", "Snacks & Beverages", "Dessert"];
-const cuisines = [
-  "American", "Italian", "Mexican", "Indian", "Thai", 
-  "Middle Eastern", "Japanese", "Korean", "Chinese", 
-  "French", "Greek", "Mediterranean", "Spanish", 
-  "Brazilian", "Vietnamese", "Fusion"
+const categories = [
+  { name: "Breakfast", apiCategory: "Breakfast" },
+  { name: "Lunch", apiCategory: "Lunch" },
+  { name: "Dinner", apiCategory: "Dinner" },
+  { name: "Snacks & Beverages", apiCategory: "Side" }, 
+  { name: "Dessert", apiCategory: "Dessert" }
+];
+
+const dietaryRestrictions = [
+  { name: "Vegetarian", apiCategory: "Vegetarian" },
+  { name: "Vegan", apiCategory: "Vegan" },
+  { name: "Gluten-Free", apiCategory: "Gluten-Free" },
+  { name: "Non-Vegetarian", apiCategory: "Non-Vegetarian" } 
 ];
 
 const MealPlanner = () => {
@@ -27,26 +35,48 @@ const MealPlanner = () => {
     Dessert: [],
   })));
   const [groceryList, setGroceryList] = useState({});
-  const [dietaryFilter, setDietaryFilter] = useState("");
-  const [cuisineFilter, setCuisineFilter] = useState("");
+  const [cuisineSearch, setCuisineSearch] = useState("");
+  const [ingredientSearch, setIngredientSearch] = useState("");
+  const [recipeSearch, setRecipeSearch] = useState(""); 
   const [categoryFilter, setCategoryFilter] = useState("");
+  const [dietaryFilter, setDietaryFilter] = useState("");
+  const [cuisines, setCuisines] = useState([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [cuisineSuggestions, setCuisineSuggestions] = useState([]);
+  const [ingredientSuggestions, setIngredientSuggestions] = useState([]);
+  const [recipeSuggestions, setRecipeSuggestions] = useState([]); 
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get("http://localhost:5000/recipes")
-      .then((response) => {
-        setRecipes(response.data);
-        setFilteredRecipes(getRandomRecipes(response.data, 5));
-        setLoading(false);
-      })
-      .catch((error) => {
+    const fetchRecipes = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get("https://www.themealdb.com/api/json/v1/1/search.php?s=");
+        if (response.data.meals) {
+          setRecipes(response.data.meals);
+          setFilteredRecipes(getRandomRecipes(response.data.meals, 5));
+        } else {
+          setMessage("No meals found.");
+        }
+      } catch (error) {
         console.error("Error fetching recipes:", error);
         setMessage("Error fetching recipes. Please try again.");
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    const fetchCuisines = async () => {
+      try {
+        const response = await axios.get("https://www.themealdb.com/api/json/v1/1/list.php?a=list");
+        setCuisines(response.data.meals);
+      } catch (error) {
+        console.error("Error fetching cuisines:", error);
+      }
+    };
+
+    fetchRecipes();
+    fetchCuisines();
   }, []);
 
   const getRandomRecipes = (recipes, count) => {
@@ -56,38 +86,60 @@ const MealPlanner = () => {
 
   useEffect(() => {
     const filtered = recipes.filter((recipe) =>
-      recipe.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (dietaryFilter ? recipe.dietary?.includes(dietaryFilter) : true) &&
-      (cuisineFilter ? recipe.cuisine?.toLowerCase() === cuisineFilter.toLowerCase() : true) &&
-      (categoryFilter ? recipe.category === categoryFilter : true)
+      recipe.strMeal.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (cuisineSearch ? recipe.strArea.toLowerCase().includes(cuisineSearch.toLowerCase()) : true) &&
+      (categoryFilter ? recipe.strCategory === categoryFilter : true) &&
+      (dietaryFilter === "Vegetarian" ? recipe.strCategory === "Vegetarian" :
+       dietaryFilter === "Vegan" ? recipe.strCategory === "Vegan" :
+       dietaryFilter === "Gluten-Free" ? recipe.strCategory === "Gluten-Free" :
+       dietaryFilter === "Non-Vegetarian" ? 
+         !["Beef", "Vegetarian", "Vegan", "Gluten-Free"].includes(recipe.strCategory) : true) &&
+      (ingredientSearch ? 
+        Object.keys(recipe)
+          .filter(key => key.startsWith('strIngredient') && recipe[key])
+          .some(key => recipe[key].toLowerCase().includes(ingredientSearch.toLowerCase())) : true)
     );
     setFilteredRecipes(getRandomRecipes(filtered, 5));
-  }, [searchTerm, dietaryFilter, cuisineFilter, categoryFilter, recipes]);
+  }, [searchTerm, cuisineSearch, categoryFilter, dietaryFilter, ingredientSearch, recipes]);
+
+  // New useEffect for recipe suggestions
+  useEffect(() => {
+    if (recipeSearch) {
+      const suggestions = recipes.filter(recipe =>
+        recipe.strMeal.toLowerCase().includes(recipeSearch.toLowerCase())
+      ).slice(0, 5); // Limit to 5 suggestions
+      setRecipeSuggestions(suggestions);
+    } else {
+      setRecipeSuggestions([]);
+    }
+  }, [recipeSearch, recipes]);
 
   const handleDrop = (dayIndex, category, recipe) => {
-    if (!recipe.ingredients) return;
-
-    if (category === "Snacks & Beverages" && !["Appetizer", "Beverage"].includes(recipe.category)) {
-      return;
-    }
-
     const newMealPlan = [...mealPlan];
     newMealPlan[dayIndex][category].push({ ...recipe, servings: 1 });
     setMealPlan(newMealPlan);
-    setMessage(`${recipe.name} added to ${category} for Day ${dayIndex + 1}`);
+    setMessage(`${recipe.strMeal} added to ${category} for Day ${dayIndex + 1}`);
   };
 
   const generateGroceryList = () => {
     const newGroceryList = {};
     mealPlan.forEach((day) => {
-      categories.forEach((category) => {
+      Object.keys(day).forEach((category) => {
         day[category].forEach((meal) => {
-          meal.ingredients?.forEach(({ name, quantity, unit }) => {
-            const totalQuantity = parseFloat(quantity) * meal.servings;
-            if (newGroceryList[name]) {
-              newGroceryList[name].quantity += totalQuantity;
+          const ingredients = Object.keys(meal)
+            .filter(key => key.startsWith('strIngredient') && meal[key])
+            .map(key => meal[key]);
+          const quantities = Object.keys(meal)
+            .filter(key => key.startsWith('strMeasure') && meal[key])
+            .map(key => meal[key]);
+
+          ingredients.forEach((ingredient, index) => {
+            const quantity = quantities[index] || '';
+            const item = `${quantity} ${ingredient}`;
+            if (newGroceryList[item]) {
+              newGroceryList[item].quantity += 1; // Count occurrences
             } else {
-              newGroceryList[name] = { quantity: totalQuantity, unit };
+              newGroceryList[item] = { quantity: 1 };
             }
           });
         });
@@ -104,12 +156,12 @@ const MealPlanner = () => {
       newMealPlan[dayIndex][category][mealIndex].servings + increment
     );
     setMealPlan(newMealPlan);
-    setMessage(`Portion adjusted for ${newMealPlan[dayIndex][category][mealIndex].name}`);
+    setMessage(`Portion adjusted for ${newMealPlan[dayIndex][category][mealIndex].strMeal}`);
   };
 
   const removeMeal = (dayIndex, category, mealIndex) => {
     const newMealPlan = [...mealPlan];
-    const removedMeal = newMealPlan[dayIndex][category][mealIndex].name;
+    const removedMeal = newMealPlan[dayIndex][category][mealIndex].strMeal;
     newMealPlan[dayIndex][category].splice(mealIndex, 1);
     setMealPlan(newMealPlan);
     setMessage(`${removedMeal} removed from ${category} for Day ${dayIndex + 1}`);
@@ -128,10 +180,10 @@ const MealPlanner = () => {
     
     mealPlan.forEach((day, dayIndex) => {
       doc.text(`Day ${dayIndex + 1}`, 14, 30 + dayIndex * 40);
-      categories.forEach((category, categoryIndex) => {
+      Object.keys(day).forEach((category, categoryIndex) => {
         doc.text(category, 14, 36 + dayIndex * 40 + categoryIndex * 10);
         day[category].forEach((meal, mealIndex) => {
-          doc.text(`${meal.name} - ${meal.servings} servings`, 20, 42 + dayIndex * 40 + categoryIndex * 10 + mealIndex * 10);
+          doc.text(`${meal.strMeal} - ${meal.servings} servings`, 20, 42 + dayIndex * 40 + categoryIndex * 10 + mealIndex * 10);
         });
       });
     });
@@ -143,56 +195,152 @@ const MealPlanner = () => {
     const doc = new jsPDF();
     doc.text("Grocery List", 14, 16);
     
-    Object.entries(groceryList).forEach(([item, { quantity, unit }], index) => {
-      doc.text(`${quantity} ${unit} ${item}`, 14, 22 + index * 10);
+    Object.entries(groceryList).forEach(([item, { quantity }], index) => {
+      doc.text(`${quantity} ${item}`, 14, 22 + index * 10);
     });
     
     doc.save("grocery_list.pdf");
   };
 
+  // Autocomplete for cuisines
+  const handleCuisineSearchChange = (e) => {
+    const value = e.target.value;
+    setCuisineSearch(value);
+    if (value) {
+      const suggestions = cuisines.filter(cuisine => 
+        cuisine.strArea.toLowerCase().includes(value.toLowerCase())
+      ).slice(0, 5); // Limit to 5 suggestions
+      setCuisineSuggestions(suggestions);
+    } else {
+      setCuisineSuggestions([]);
+    }
+  };
+
+  // Autocomplete for ingredients
+  const handleIngredientSearchChange = (e) => {
+    const value = e.target.value;
+    setIngredientSearch(value);
+    if (value) {
+      const suggestions = recipes.flatMap(recipe => 
+        Object.keys(recipe)
+          .filter(key => key.startsWith('strIngredient') && recipe[key])
+          .map(key => recipe[key])
+      ).filter(ingredient => 
+        ingredient.toLowerCase().includes(value.toLowerCase())
+      ).slice(0, 5); // Limit to 5 suggestions
+      setIngredientSuggestions([...new Set(suggestions)]); // Unique ingredients
+    } else {
+      setIngredientSuggestions([]);
+    }
+  };
+
+  // Function to handle selection of cuisine
+  const selectCuisine = (cuisine) => {
+    setCuisineSearch(cuisine.strArea);
+    setCuisineSuggestions([]); // Hide suggestions
+  };
+
+  // Function to handle selection of ingredient
+  const selectIngredient = (ingredient) => {
+    setIngredientSearch(ingredient);
+    setIngredientSuggestions([]); // Hide suggestions
+  };
+
+  // Function to handle selection of recipe
+  const selectRecipe = (recipe) => {
+    setRecipeSearch(recipe.strMeal);
+    setRecipeSuggestions([]); // Hide suggestions
+  };
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-      <header className="recipe-page-navbar">
-        <Link to="/" className="nav-home">← Return To Home</Link>
-        <h1 className="nav-title">PlatePal</h1>
-        <button className="user-button">User</button>
-    </header>
-        <h1 style={{ textAlign: "center", padding: "20px" }}>Weekly Meal Planner</h1>
-        <input
-          type="text"
-          placeholder="Search recipes..."
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
-        />
+      <nav className="navbar">
+        <img src='src/pages/platepal_logo.png' alt="PlatePal Logo" className="logo" width="133px" height="30px" /> {/* Logo added here */}
+        <h3>   </h3>
+        <ul>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/build-recipe">Build a Recipe</Link></li>
+          <li><Link to="/meal-planner">Meal Planner</Link></li>
+          <li><Link to="/dine-like-a-local">Dine Like a Local</Link></li>
+        </ul>
+      </nav>
+        <h1 style={{ textAlign: "center", padding: "40px", marginBottom: "10px" }}>Weekly Meal Planner</h1>
         
-        <select onChange={(e) => setDietaryFilter(e.target.value)} style={{ marginRight: "10px" }}>
-          <option value="">All Diets</option>
-          <option value="Vegetarian">Vegetarian</option>
-          <option value="Vegan">Vegan</option>
-          <option value="Gluten-Free">Gluten-Free</option>
-        </select>
+        <div style={{ position: "relative", marginBottom: "10px" }}>
+          <FaSearch style={{ position: "absolute", left: "10px", top: "50%", transform: "translateY(-50%)", color: "#6B4226" }} />
+          <input
+            type="text"
+            placeholder="Search recipes..."
+            value={recipeSearch}
+            onChange={(e) => setRecipeSearch(e.target.value)}
+            style={{ width: "100%", padding: "12px 40px", marginBottom: "10px" }}
+          />
+          {recipeSuggestions.length > 0 && (
+            <ul className="suggestions">
+              {recipeSuggestions.map(recipe => (
+                <li key={recipe.idMeal} onClick={() => selectRecipe(recipe)}>{recipe.strMeal}</li>
+              ))}
+            </ul>
+          )}
+        </div>
 
-        <select onChange={(e) => setCuisineFilter(e.target.value)} style={{ marginRight: "10px" }}>
-          <option value="">All Cuisines</option>
-          {cuisines.map(cuisine => (
-            <option key={cuisine} value={cuisine}>{cuisine}</option>
-          ))}
-        </select>
+        <div style={{ position: "relative", marginBottom: "10px" }}>
+          <FaSearch style={{ position: "absolute", left: "10px", top: "50%", transform: "translateY(-50%)", color: "#6B4226" }} />
+          <input
+            type="text"
+            placeholder="Search cuisines..."
+            value={cuisineSearch}
+            onChange={handleCuisineSearchChange}
+            style={{ width: "100%", padding: "12px 40px", marginBottom: "10px" }}
+          />
+          {cuisineSuggestions.length > 0 && (
+            <ul className="suggestions">
+              {cuisineSuggestions.map(cuisine => (
+                <li key={cuisine.strArea} onClick={() => selectCuisine(cuisine)}>{cuisine.strArea}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        <div style={{ position: "relative", marginBottom: "10px" }}>
+          <FaSearch style={{ position: "absolute", left: "10px", top: "50%", transform: "translateY(-50%)", color: "#6B4226" }} />
+          <input
+            type="text"
+            placeholder="Search by ingredient..."
+            value={ingredientSearch}
+            onChange={handleIngredientSearchChange}
+            style={{ width: "100%", padding: "12px 40px", marginBottom: "10px" }}
+          />
+          {ingredientSuggestions.length > 0 && (
+            <ul className="suggestions">
+              {ingredientSuggestions.map((ingredient, index) => (
+                <li key={index} onClick={() => selectIngredient(ingredient)}>{ingredient}</li>
+              ))}
+            </ul>
+          )}
+        </div>
 
         <select onChange={(e) => setCategoryFilter(e.target.value)} style={{ marginRight: "10px" }}>
           <option value="">All Categories</option>
           {categories.map(category => (
-            <option key={category} value={category}>{category}</option>
+            <option key={category.name} value={category.apiCategory}>{category.name}</option>
+          ))}
+        </select>
+
+        <select onChange={(e) => setDietaryFilter(e.target.value)} style={{ marginRight: "10px" }}>
+          <option value="">All Dietary Types</option>
+          {dietaryRestrictions.map(diet => (
+            <option key={diet.name} value={diet.apiCategory}>{diet.name}</option>
           ))}
         </select>
 
         {loading && <p>Loading recipes...</p>}
-        {message && <p style={{ color: "cornsilk" }}>{message}</p>}
+        {message && <p style={{ color: "red" }}>{message}</p>}
 
         <div className="cookbook" style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
           {filteredRecipes.length > 0 ? (
-            filteredRecipes.map((recipe) => <DraggableRecipe key={recipe.id} recipe={recipe} />)
+            filteredRecipes.map((recipe) => <DraggableRecipe key={recipe.idMeal} recipe={recipe} />)
           ) : (
             <p>No recipes found</p>
           )}
@@ -211,17 +359,13 @@ const MealPlanner = () => {
           ))}
         </div>
 
-        <button className="meal-button" onClick={generateMealPlannerPDF} style={{ marginTop: "20px", padding: "10px",fontFamily:"Playfair Display", fontSize: "16px" }}>
+        <button className="meal-button" onClick={generateMealPlannerPDF} style={{ marginTop: "20px", padding: "10px", fontFamily: "Playfair Display", fontSize: "16px" }}>
           Print Meal Planner as PDF
         </button>
 
-        <button className="meal-button" onClick={generateGroceryList} style={{ marginTop: "20px", padding: "10px", fontFamily:"Playfair Display", fontSize: "16px" }}>
+        <button className="meal-button" onClick={generateGroceryList} style={{ marginTop: "20px", padding: "10px", fontFamily: "Playfair Display", fontSize: "16px" }}>
           Generate Grocery List
         </button>
-
-        
-
-        
 
         <div className="grocery-list" style={{ marginTop: "20px" }}>
           <h2>Grocery List</h2>
@@ -229,38 +373,37 @@ const MealPlanner = () => {
             <p>No ingredients yet</p>
           ) : (
             <ul>
-              {Object.entries(groceryList).map(([item, { quantity, unit }]) => (
+              {Object.entries(groceryList).map(([item, { quantity }]) => (
                 <li key={item} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  {quantity} {unit} {item}
+                  {item}
                   <button 
-  onClick={() => removeIngredient(item)}
-  style={{
-    width: "20px",
-    height: "20px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ff4d4d",
-    color: "white",
-    border: "none",
-    borderRadius: "3px",
-    cursor: "pointer",
-    fontSize: "14px",
-    fontWeight: "bold",
-    transition: "background-color 0.2s ease",
-  }}
-  onMouseOver={(e) => (e.target.style.backgroundColor = "#cc0000")}
-  onMouseOut={(e) => (e.target.style.backgroundColor = "#ff4d4d")}
->
-  ×
-</button>
-
+                    onClick={() => removeIngredient(item)}
+                    style={{
+                      width: "20px",
+                      height: "20px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      backgroundColor: "#ff4d4d",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "3px",
+                      cursor: "pointer",
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      transition: "background-color 0.2s ease",
+                    }}
+                    onMouseOver={(e) => (e.target.style.backgroundColor = "#cc0000")}
+                    onMouseOut={(e) => (e.target.style.backgroundColor = "#ff4d4d")}
+                  >
+                    ×
+                  </button>
                 </li>
               ))}
             </ul>
           )}
         </div>
-        <button className="meal-button" onClick={generateGroceryListPDF} style={{ marginTop: "20px", padding: "10px",fontFamily:"Playfair Display", fontSize: "16px" }}>
+        <button className="meal-button" onClick={generateGroceryListPDF} style={{ marginTop: "20px", padding: "10px", fontFamily: "Playfair Display", fontSize: "16px" }}>
           Print Grocery List as PDF
         </button>
       </div>
@@ -277,8 +420,8 @@ const DraggableRecipe = ({ recipe }) => {
 
   return (
     <div ref={drag} className="meal-card" style={{ opacity: isDragging ? 0.5 : 1 }}>
-      <img src={recipe.image} alt={recipe.name} style={{ width: "100%", borderRadius: "5px" }} />
-      <h3 style={{ fontSize: "1.1em", margin: "10px 0" }}>{recipe.name}</h3>
+      <img src={recipe.strMealThumb} alt={recipe.strMeal} style={{ width: "100%", borderRadius: "5px" }} />
+      <h3 style={{ fontSize: "1.1em", margin: "10px 0" }}>{recipe.strMeal}</h3>
     </div>
   );
 };
@@ -287,7 +430,7 @@ const DayMealPlan = ({ dayIndex, day, onDrop, adjustPortion, removeMeal }) => {
   return (
     <div className="day-meal-plan">
       <h4 style={{ textAlign: "center" }}>Day {dayIndex + 1}</h4>
-      {categories.map((category) => (
+      {Object.keys(day).map((category) => (
         <MealSlot
           key={category}
           dayIndex={dayIndex}
@@ -317,11 +460,11 @@ const MealSlot = ({ dayIndex, category, meals, onDrop, adjustPortion, removeMeal
             <div key={index} className="meal-item">
               <h3>
                 <i className="fas fa-utensils" style={{ marginRight: "5px", color: "#69B645" }}></i>
-                {meal.name}
+                {meal.strMeal}
               </h3>
               <div className="servings" style={{ display: "flex", alignItems: "center", margin: "10px 0" }}>
                 <button onClick={() => adjustPortion(dayIndex, category, index, 1)}>+</button>
-                <span style={{ margin: "0 10px" }}>{meal.servings} servings</span>
+                <span style={{ margin: "4px" }}>{meal.servings} servings</span>
                 <button onClick={() => adjustPortion(dayIndex, category, index, -1)}>-</button>
               </div>
               <button onClick={() => removeMeal(dayIndex, category, index)} className="remove-button" style={{ width: "100%", backgroundColor: "#69B645", color: "white" }}>

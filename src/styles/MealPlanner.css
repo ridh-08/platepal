@@ -1,4 +1,8 @@
 /* General Styles */
+* {
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
 body {
     font-family: 'Source Sans Pro', sans-serif;
     background-color: #0F5D47; /* Deep Emerald Teal */
@@ -7,39 +11,65 @@ body {
     color: #FAF3DD; /* Toasted Almond Cream */
     line-height: 1.8;
 }
-/* Navbar */
-.recipe-page-navbar {
-    width: 97vw;
+
+.navbar {
+    width: 90vw;
+    overflow-x: hidden;
     height: 10vh;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Space between logo and links */
     align-items: center;
-    background: #0F5D47; /* Green */
-    padding: 0 20px;
+    background: #0F5D47; /* Warm Apricot */
+    padding: 0px 10%;
     color: white;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
 }
 
-/* Home Link */
-.nav-home {
-    font-size: 14px;
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    left: 50px;
+.logo-container {
+    display: flex;
+    align-items: center; /* Center logo and text vertically */
 }
 
-/* Center 'PlatePal' */
-.nav-title {
-    flex-grow: 1;
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
+.logo {
+    min-width: 133px;
+    min-height: 30px;
+    margin-right: 0; /* Remove margin to place text directly next to logo */
+}
+
+h3 {
+    color: #FAF3DD; /* Golden Mango Yellow */
+    font-size: xx-large;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    text-align: left; /* Align text to the left */
+    margin-left: 0; /* Remove margin to place text directly next to logo */
+}
+
+/* Navigation Links */
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
     margin: 0;
+}
+
+.navbar ul li {
+    display: inline;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.navbar ul li a:hover {
+    background-color: #D72638; /* Deep Cranberry Red */
+    color: white;
 }
 
 .container {
@@ -49,7 +79,16 @@ body {
 }
 
 /* Header Styles */
-h1, h3  {
+h1 {
+    color: #FAF3DD;
+    background-color: #FF9F1C;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+h3 {
     color: #FAF3DD; /* Golden Mango Yellow */
     font-family: 'Playfair Display', serif;
     font-weight: 700;
@@ -90,11 +129,11 @@ h2 {
     border-radius: 5px;
     cursor: pointer;
 }
-  
+
 .remove-button:hover {
     background-color: #E63946; /* Ripe Berry Red */
 }
-  
+
 /* Input and Select Styles */
 input[type="text"], select {
     width: 100%;
@@ -147,14 +186,14 @@ input[type="text"]:focus, select:focus {
     border-radius: 12px;
     padding: 18px;
     width: 200px;
-    background-color: #FFA630; /* Sun-Kissed Orange */
+    background: #FFA630; /* Sun-Kissed Orange */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     font-family: 'Poppins', sans-serif;
 }
 
-.meal-card h3{
-    color:white;
+.meal-card h3 {
+    color: #2E2E2E;
     font-size: x-large;
 }
 
@@ -166,10 +205,9 @@ input[type="text"]:focus, select:focus {
 /* Meal Item Styles */
 .meal-item {
     width: 160px;
-    
-    background-color: #ffffff;
+    background-color: #FAF3DD;
     border: 1px solid #6B4226; /* Warm Cocoa Brown */
-    color:#2E2E2E;
+    color: #2E2E2E;
     border-radius: 10px;
     padding: 14px;
     margin-bottom: 12px;
@@ -222,7 +260,58 @@ input[type="text"]:focus, select:focus {
     border-radius: 5px;
 }
 
-.meal-slot h4{
-    color:#6B4226;
+.meal-slot h4 {
+    color: #6B4226;
     font-size: large;
+}
+
+.suggestions {
+    position: absolute;
+    background-color: white;
+    color: #2E2E2E;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    z-index: 1000; 
+    width: 100%;
+    max-height: 150px; 
+    overflow-y: auto; 
+    padding: 0;
+    margin: 0; 
+    list-style-type: none; 
+}
+
+.suggestions li {
+    padding: 10px;
+    cursor: pointer;
+    text-align: left; 
+}
+
+.suggestions li:hover {
+    background-color: #f0f0f0; 
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column; /* Stack items vertically on small screens */
+        height: auto; /* Allow height to adjust */
+    }
+
+    .navbar ul {
+        flex-direction: column; /* Stack links vertically */
+        gap: 10px; /* Adjust gap for vertical stacking */
+    }
+
+    .container {
+        padding: 10px; /* Reduce padding on smaller screens */
+    }
+
+    .cookbook {
+        flex-direction: column; /* Stack cookbook items vertically */
+        align-items: center; /* Center items */
+    }
+
+    .meal-card {
+        width: 90%; /* Make cards responsive */
+    }
 }
