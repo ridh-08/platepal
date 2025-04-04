@@ -48,9 +48,11 @@ const DineLikeALocal = () => {
         <ul>
           <li><Link to="/">Home</Link></li>
           <li><Link to="/build-recipe">Build a Recipe</Link></li>
+          <li><Link to="/search-page">Cook a Recipe</Link></li>
           <li><Link to="/meal-planner">Meal Planner</Link></li>
           <li><Link to="/dine-like-a-local">Dine Like a Local</Link></li>
         </ul>
+        <span className="user-icon">👤</span>
       </nav>
       <h2>Dine Like a Local</h2>
       <p>Click on a country to explore its daily meal plan and dining etiquette.</p>
@@ -64,7 +66,7 @@ const DineLikeALocal = () => {
       </div>
 
       {/* Search Section */}
-      <div className="search-container">
+      <div className="search_container">
         <h3>Found one of these interesting? Search here!</h3>
         <input
           type="text"

@@ -152,9 +152,11 @@ const BuildRecipe: React.FC = () => {
         <ul>
           <li><Link to="/">Home</Link></li>
           <li><Link to="/build-recipe">Build a Recipe</Link></li>
+          <li><Link to="/search-page">Cook a Recipe</Link></li>
           <li><Link to="/meal-planner">Meal Planner</Link></li>
           <li><Link to="/dine-like-a-local">Dine Like a Local</Link></li>
         </ul>
+        <span className="user-icon">👤</span>
       </nav>
       <h1 style={{ textAlign: "center", padding: "20px" }}>Create a New Recipe</h1>
       <input

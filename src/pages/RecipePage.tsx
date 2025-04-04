@@ -69,14 +69,16 @@ const RecipePage: React.FC = () => {
         <div className="recipe-page-container">
             {/* Navbar */}
             <nav className="navbar">
-        <img src='src/pages/platepal_logo.png' alt="PlatePal Logo" className="logo" width="133px" height="30px" /> {/* Logo added here */}
+            <img src='src/pages/platepal_logo.png' alt="PlatePal Logo" className="logo" width="133px" height="30px" /> 
         <h3>   </h3>
         <ul>
           <li><Link to="/">Home</Link></li>
           <li><Link to="/build-recipe">Build a Recipe</Link></li>
+          <li><Link to="/search-page">Cook a Recipe</Link></li>
           <li><Link to="/meal-planner">Meal Planner</Link></li>
           <li><Link to="/dine-like-a-local">Dine Like a Local</Link></li>
         </ul>
+        <span className="user-icon">👤</span>
       </nav>
 
             {/* Main Recipe Info */}

@@ -37,9 +37,9 @@ body {
 }
 
 h3 {
-    color: #FAF3DD; /* Golden Mango Yellow */
+    color: #FAF3DD; 
     font-size: xx-large;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Advent Pro', serif;
     font-weight: 700;
     text-align: left; /* Align text to the left */
     margin-left: 0; /* Remove margin to place text directly next to logo */
@@ -53,24 +53,6 @@ h3 {
     margin: 0;
 }
 
-.navbar ul li {
-    display: inline;
-}
-
-.navbar ul li a {
-    text-decoration: none;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 8px 12px;
-    border-radius: 4px;
-    transition: background 0.3s ease;
-}
-
-.navbar ul li a:hover {
-    background-color: #D72638; /* Deep Cranberry Red */
-    color: white;
-}
 
 .container {
     max-width: 1200px;
@@ -82,7 +64,7 @@ h3 {
 h1 {
     color: #FAF3DD;
     background-color: #FF9F1C;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Advent Pro', serif;
     font-weight: 700;
     text-align: center;
     letter-spacing: 1px;
@@ -90,7 +72,7 @@ h1 {
 
 h3 {
     color: #FAF3DD; /* Golden Mango Yellow */
-    font-family: 'Playfair Display', serif;
+    font-family: 'Advent Pro', serif;
     font-weight: 700;
     text-align: center;
     letter-spacing: 1px;
@@ -99,7 +81,7 @@ h3 {
 h4 {
     font-size: large;
     color: #FAF3DD; /* Golden Mango Yellow */
-    font-family: 'Playfair Display', serif;
+    font-family: 'Advent Pro', serif;
     font-weight: 700;
     text-align: center;
     letter-spacing: 1px;
@@ -107,7 +89,7 @@ h4 {
 
 h2 {
     color: #6B4226; /* Sun-Kissed Orange */
-    font-family: 'Playfair Display', serif;
+    font-family: 'Advent Pro', serif;
     font-weight: 600;
     text-align: center;
     letter-spacing: 1px;
@@ -225,14 +207,14 @@ input[type="text"]:focus, select:focus {
     font-size: 1.4em;
     margin: 0;
     color: #2E2E2E; /* Toasted Almond Cream */
-    font-family: 'Playfair Display', serif;
+    font-family: 'Advent Pro', serif;
 }
 
 .meal-item h4 {
     font-size: 1.4em;
     margin: 0;
     color: #2E2E2E; /* Toasted Almond Cream */
-    font-family: 'Playfair Display', serif;
+    font-family: 'Advent Pro', serif;
 }
 
 /* Grocery List Styles */

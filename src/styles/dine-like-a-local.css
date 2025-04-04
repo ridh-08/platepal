@@ -36,7 +36,7 @@
 h3 {
   color: #FAF3DD; /* Golden Mango Yellow */
   font-size: xx-large;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Advent Pro', serif;
   font-weight: 700;
   text-align: left; /* Align text to the left */
   margin-left: 0; /* Remove margin to place text directly next to logo */
@@ -66,10 +66,7 @@ h3 {
   transition: background 0.3s ease;
 }
 
-.navbar ul li a:hover {
-  background-color: #D72638; /* Deep Cranberry Red */
-  color: white;
-}
+
 
 /* Heading Styling */
 .dine-local-container h2 {
@@ -137,7 +134,7 @@ h3 {
 }
 
 /* Search Bar Container */
-.search-container {
+.search_container {
   margin-top: 30px;
   text-align: center;
   padding: 20px;

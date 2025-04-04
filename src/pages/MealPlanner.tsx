@@ -102,7 +102,7 @@ const MealPlanner = () => {
     setFilteredRecipes(getRandomRecipes(filtered, 5));
   }, [searchTerm, cuisineSearch, categoryFilter, dietaryFilter, ingredientSearch, recipes]);
 
-  // New useEffect for recipe suggestions
+  
   useEffect(() => {
     if (recipeSearch) {
       const suggestions = recipes.filter(recipe =>
@@ -261,9 +261,11 @@ const MealPlanner = () => {
         <ul>
           <li><Link to="/">Home</Link></li>
           <li><Link to="/build-recipe">Build a Recipe</Link></li>
+          <li><Link to="/search-page">Cook a Recipe</Link></li>
           <li><Link to="/meal-planner">Meal Planner</Link></li>
           <li><Link to="/dine-like-a-local">Dine Like a Local</Link></li>
         </ul>
+        <span className="user-icon">👤</span>
       </nav>
         <h1 style={{ textAlign: "center", padding: "40px", marginBottom: "10px" }}>Weekly Meal Planner</h1>
         
