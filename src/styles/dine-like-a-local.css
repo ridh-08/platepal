@@ -9,67 +9,97 @@
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
 }
 
+/* Navigation Bar */
 .navbar {
   width: 85vw;
-  overflow-x: hidden;
   height: 10vh;
   display: flex;
-  justify-content: space-between; /* Space between logo and links */
+  justify-content: space-between;
   align-items: center;
-  background: #0F5D47; /* Warm Apricot */
-  padding: 0px 10%;
+  background: #0F5D47;
+  padding: 0 10%;
   color: white;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .logo-container {
   display: flex;
-  align-items: center; /* Center logo and text vertically */
+  align-items: center;
 }
 
 .logo {
   min-width: 133px;
   min-height: 30px;
-  margin-right: 0; /* Remove margin to place text directly next to logo */
+  margin-right: 0;
 }
 
 h3 {
-  color: #FAF3DD; /* Golden Mango Yellow */
+  color: #FAF3DD;
   font-size: xx-large;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Advent Pro', serif;
   font-weight: 700;
-  text-align: left; /* Align text to the left */
-  margin-left: 0; /* Remove margin to place text directly next to logo */
+  text-align: left;
+  margin-left: 0;
 }
 
 /* Navigation Links */
 .navbar ul {
-  list-style: none;
   display: flex;
-  gap: 20px;
+  align-items: center;
+  gap: 30px;
+  list-style: none;
+  padding: 0;
   margin: 0;
 }
 
-.navbar ul li {
-  display: inline;
-  align-items: flex-end;
+.navbar li {
+  display: inline-block;
 }
 
-.navbar ul li a {
-  align-items: right;
+.navbar a {
   text-decoration: none;
   color: white;
-  font-size: 16px;
   font-weight: bold;
   padding: 8px 12px;
-  border-radius: 4px;
-  transition: background 0.3s ease;
+  font-size: 16px;
+  transition: color 0.3s ease; /* Only transition color, no background */
+  position: relative;
 }
 
-.navbar ul li a:hover {
-  background-color: #D72638; /* Deep Cranberry Red */
-  color: white;
+.navbar a:hover {
+  color: red; /* Only change text color to red */
+  background: none; /* Explicitly remove any background */
 }
+
+.navbar a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 3px;
+  left: 12px;
+  background-color: red;
+  transition: width 0.3s ease;
+}
+
+.navbar a:hover::after {
+  width: calc(100% - 24px); /* Underline extends on hover */
+}
+
+/* Special case for the user icon */
+.navbar li:last-child a {
+  padding: 8px;
+}
+
+.navbar li:last-child a:hover {
+  color: white; /* Keep white on hover */
+  transform: scale(1.2);
+}
+
+.navbar li:last-child a::after {
+  display: none; /* No underline for the user icon */
+}
+
 
 /* Heading Styling */
 .dine-local-container h2 {
@@ -137,7 +167,7 @@ h3 {
 }
 
 /* Search Bar Container */
-.search-container {
+.dine-search-container {
   margin-top: 30px;
   text-align: center;
   padding: 20px;
@@ -147,14 +177,14 @@ h3 {
 }
 
 /* Search Heading */
-.search-container h3 {
+.dine-search-container h3 { /* Fixed selector to match class name */
   font-size: 1.5rem;
   color: white;
   margin-bottom: 10px;
 }
 
 /* Input Field */
-.search-container input {
+.dine-search-container input { /* Fixed selector */
   width: 60%;
   padding: 10px;
   font-size: 1rem;
@@ -164,19 +194,18 @@ h3 {
 }
 
 /* Search Button */
-.search-container button {
+.dine-search-container button { /* Fixed selector */
   padding: 10px 10px;
   font-size: 1rem;
   color: white;
   background-color: #0F5D47; /* Green button */
   border: none;
   border-radius: 8px;
-
   cursor: pointer;
   transition: background 0.3s ease;
 }
 
-.search-container button:hover {
+.dine-search-container button:hover {
   background-color: #08422E; /* Darker green on hover */
 }
 

@@ -24,7 +24,7 @@ body {
 h3{
     color: #FAF3DD; /* Golden Mango Yellow */
   font-size: xx-large;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Verdana Display', serif;
     font-weight: 700;
     text-align: center;
     letter-spacing: 1px;
@@ -58,7 +58,7 @@ h3{
 h3 {
     color: #FAF3DD; /* Golden Mango Yellow */
     font-size: xx-large;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Verdana Display', serif;
     font-weight: 700;
     text-align: left; /* Align text to the left */
     margin-left: 0; /* Remove margin to place text directly next to logo */
@@ -86,11 +86,6 @@ h3 {
     padding: 8px 12px;
     border-radius: 4px;
     transition: background 0.3s ease;
-}
-
-.navbar ul li a:hover {
-    background-color: #D72638; /* Deep Cranberry Red */
-    color: white;
 }
 
 
@@ -121,13 +116,15 @@ h3 {
 }
 
 .recipe-author {
+    text-align: center;
     font-size: 14px;
     color: #555;
     margin: 3px 0;
 }
 
 .recipe-rating {
-   font-size: 14px;
+   text-align: center;
+    font-size: 14px;
     color: #555;
     margin: 5px 0;
 }

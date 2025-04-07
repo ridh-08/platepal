@@ -1,60 +1,364 @@
-.search-container {
-    max-width: 600px;
-    margin: 20px auto;
+/* Global Reset and Background */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+.container,  .search-container{
+    background-color: #FAF3DD !important;
+}
+
+.filters{
+    background-color: #FF9F1C!important;
+}
+
+
+.navbar {
+    background-color: #0F5D47 !important; /* Keep the navbar green */
+}
+
+
+.search-container{
+    background-color: #FAF3DD;
+}
+
+h3 {
+    color: green;
+}
+
+/* Search Bar */
+.search-bar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.search-bar {
+    width: 450px;
+    align-items: center !important;
+    padding: 12px 40px 12px 15px;
+    margin-left: 320px;
+    margin-right: 10px;
+    margin-bottom: 100px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    font-size: 16px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.search-bar:focus {
+    outline: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.search-icon {
+    margin-right: 350px;
+    margin-top: 10px;
+    right: calc(50% - 160px);
+    top: 54%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 40px;
+    color: #6B4226;
+}
+
+.navbar {
+    width: 85vw;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0F5D47;
+    padding: 0 10%;
+    color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    min-width: 133px;
+    min-height: 30px;
+    margin-right: 0;
+}
+
+h3 {
+    color: #FAF3DD;
+    font-size: xx-large;
+    font-family: 'Advent Pro', serif;
+    font-weight: 700;
+    text-align: left;
+    margin-left: 0;
+}
+
+/* Navigation Links */
+.navbar ul {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar li {
+    display: inline-block;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 8px 12px;
+    font-size: 16px;
+    transition: color 0.3s ease; /* Only transition color, no background */
+    position: relative;
+}
+
+.navbar a:hover {
+    color: red; /* Only change text color to red */
+    background: none; /* Explicitly remove any background */
+}
+
+.navbar a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 3px;
+    left: 12px;
+    background-color: red;
+    transition: width 0.3s ease;
+}
+
+.navbar a:hover::after {
+    width: calc(100% - 24px); /* Underline extends on hover */
+}
+
+/* Special case for the user icon */
+.navbar li:last-child a {
+    padding: 8px;
+}
+
+.navbar li:last-child a:hover {
+    color: white; /* Keep white on hover */
+    transform: scale(1.2);
+}
+
+.navbar li:last-child a::after {
+    display: none; /* No underline for the user icon */
+}
+
+/* Hero Section with Background Image */
+.hero {
+    position: relative;
+    height: 300px; /* Adjust height as needed */
+    background-image: url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"); /* Sample food image */
+    background-size: cover;
+    background-position: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
 }
 
-input {
-    width: 70%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for text readability */
+    z-index: 1;
 }
 
-button {
-    padding: 10px 15px;
-    background-color: #2d6a4f;
+.hero h1 {
+    position: relative;
+    z-index: 2;
+    font-size: 2.5rem;
+    font-family: "Georgia", serif;
     color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 10px 20px;
+    background-color: rgba(107, 66, 38, 0.7); /* Semi-transparent #6B4226 background */
+    border-radius: 10px;
 }
 
-button:disabled {
-    background-color: #ccc;
-}
-
-.error {
-    color: red;
-    margin-top: 10px;
-}
-
-.recipe-list {
+/* Main Layout */
+.main-content {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.main-content h3{
+    color: #FAF3DD;
+}
+
+/* Filters (Left Sidebar) */
+.filters {
+    width: 25%;
+    min-width: 200px;
+    padding: 25px;
+    background: #f7f7f7;
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #ddd;
+}
+
+.filter-heading {
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: #6B4226;
+    margin-bottom: 20px;
+    font-family: "Georgia", serif;
+    border-bottom: 2px solid #6B4226;
+    padding-bottom: 5px;
+}
+
+.filter-group {
+    margin-bottom: 20px;
+}
+
+.filter-title {
+    text-align: left;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #6B4226;
+    margin-bottom: 10px;
+}
+
+.filter-title h3 {
+    color: green;
+}
+
+.filter-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 1rem;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.filter-option:hover {
+    color: #6B4226;
+}
+
+.filter-option input[type="checkbox"],
+.filter-option input[type="radio"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.filter-option input[type="radio"] {
+    border-radius: 50%;
+}
+
+.filter-option input[type="checkbox"]:checked,
+.filter-option input[type="radio"]:checked {
+    border-color: #6B4226;
+    background-color: #6B4226;
+}
+
+.filter-option input[type="checkbox"]:checked::after {
+    content: "✔";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+}
+
+.filter-option input[type="radio"]:checked::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.filter-option input[type="checkbox"]:hover:not(:checked),
+.filter-option input[type="radio"]:hover:not(:checked) {
+    border-color: #6B4226;
+}
+
+/* Recipe List (Right Side) */
+.recipe-list {
+    width: 75%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+    padding-left: 25px;
+    position: relative;
 }
 
 .recipe-card {
-    width: 200px;
-    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    overflow: hidden;
+    background: #0F5D47;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    text-align: center;
-    background: orange;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .recipe-card:hover {
-    transform: scale(1.05);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .recipe-card img {
     width: 100%;
-    border-radius: 8px;
+    height: 220px;
+    object-fit: cover;
+}
+
+.recipe-info {
+    padding: 15px;
+    text-align: center;
+}
+
+.recipe-info h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.recipe-info p {
+    font-size: 0.9rem;
+    color: lightgray;
+    margin: 3px 0;
 }

@@ -147,15 +147,19 @@ const BuildRecipe: React.FC = () => {
   return (
     <div className="build-recipe">
       <nav className="navbar">
-        <img src='src/pages/platepal_logo.png' alt="PlatePal Logo" className="logo" width="133px" height="30px" /> {/* Logo added here */}
-        <h3>   </h3>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/build-recipe">Build a Recipe</Link></li>
-          <li><Link to="/meal-planner">Meal Planner</Link></li>
-          <li><Link to="/dine-like-a-local">Dine Like a Local</Link></li>
-        </ul>
-      </nav>
+  <div className="logo-container">
+    <img src="src\pages\platepal_logo.png" alt="Logo" className="logo" />
+    <h3></h3>
+  </div>
+  <ul>
+    <li><Link to="/">Home</Link></li>
+    <li><Link to="/build-recipe">Build a Recipe</Link></li>
+    <li><Link to="/search-page">Cook a Recipe</Link></li>
+    <li><Link to="/meal-planner">Meal Planner</Link></li>
+    <li><Link to="/dine-like-a-local">Dine Like a Local</Link></li>
+    <li><Link to="/">👤</Link></li> {/* Last item, no underline */}
+  </ul>
+</nav>
       <h1 style={{ textAlign: "center", padding: "20px" }}>Create a New Recipe</h1>
       <input
         type="text"

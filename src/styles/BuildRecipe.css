@@ -1,7 +1,7 @@
 /* General Page Styling */
 body {
-    background-color: #0F5D47; /* Deep Emerald Teal */
-    font-family: 'Source Sans Pro', sans-serif;
+    background-color: #0F5D47;
+    font-family: 'Verdana, Geneva, Tahoma, sans-serif', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,82 +12,109 @@ body {
 
 /* Centered Recipe Form */
 .build-recipe {
-    
-        max-width: 90vw;
-        margin: 0 auto;
-        padding: 20px;
-        text-align: center;
-        background-color: #F8E9C9; /* Soft background */
-        border-radius: 12px;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-      
+    max-width: 90vw;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #FF9F1C;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
 }
 
+/* Navigation Bar */
 .navbar {
     width: 85vw;
-    overflow-x: hidden;
     height: 10vh;
     display: flex;
-    justify-content: space-between; /* Space between logo and links */
+    justify-content: space-between;
     align-items: center;
-    background: #0F5D47; /* Warm Apricot */
-    padding: 0px 10%;
+    background: #0F5D47;
+    padding: 0 10%;
     color: white;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .logo-container {
+}
+
+.logo-container {
     display: flex;
-    align-items: center; /* Center logo and text vertically */
-  }
-  
-  .logo {
+    align-items: center;
+}
+
+.logo {
     min-width: 133px;
     min-height: 30px;
-    margin-right: 0; /* Remove margin to place text directly next to logo */
-  }
-  
-  h3 {
-    color: #FAF3DD; /* Golden Mango Yellow */
+    margin-right: 0;
+}
+
+h3 {
+    color: #FAF3DD;
     font-size: xx-large;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Advent Pro', serif;
     font-weight: 700;
-    text-align: left; /* Align text to the left */
-    margin-left: 0; /* Remove margin to place text directly next to logo */
-  }
-  
-  /* Navigation Links */
-  .navbar ul {
-    list-style: none;
+    text-align: left;
+    margin-left: 0;
+}
+
+/* Navigation Links */
+.navbar ul {
     display: flex;
-    gap: 20px;
+    align-items: center;
+    gap: 30px;
+    list-style: none;
+    padding: 0;
     margin: 0;
-  }
-  
-  .navbar ul li {
-    display: inline;
-    align-items: flex-end;
-  }
-  
-  .navbar ul li a {
-    align-items: right;
+}
+
+.navbar li {
+    display: inline-block;
+}
+
+.navbar a {
     text-decoration: none;
     color: white;
-    font-size: 16px;
     font-weight: bold;
     padding: 8px 12px;
-    border-radius: 4px;
-    transition: background 0.3s ease;
-  }
-  
-  .navbar ul li a:hover {
-    background-color: #D72638; /* Deep Cranberry Red */
-    color: white;
-  }
+    font-size: 16px;
+    transition: color 0.3s ease; /* Only transition color, no background */
+    position: relative;
+}
+
+.navbar a:hover {
+    color: red; /* Only change text color to red */
+    background: none; /* Explicitly remove any background */
+}
+
+.navbar a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 3px;
+    left: 12px;
+    background-color: red;
+    transition: width 0.3s ease;
+}
+
+.navbar a:hover::after {
+    width: calc(100% - 24px); /* Underline extends on hover */
+}
+
+/* Special case for the user icon */
+.navbar li:last-child a {
+    padding: 8px;
+}
+
+.navbar li:last-child a:hover {
+    color: white; /* Keep white on hover */
+    transform: scale(1.2);
+}
+
+.navbar li:last-child a::after {
+    display: none; /* No underline for the user icon */
+}
 
 /* Headings */
 h1, h2, h3 {
-    color: #FFCC4D; /* Golden Mango Yellow */
+    color: #FFCC4D;
     font-weight: bold;
     margin-bottom: 20px;
 }
@@ -100,10 +127,10 @@ textarea {
     width: 100%;
     height: 50px;
     padding: 12px;
-    border: 2px solid #6B4226; /* Warm Cocoa Brown */
+    border: 2px solid #6B4226;
     border-radius: 8px;
     font-size: 16px;
-    background-color: #FAF3DD; /* Toasted Almond Cream */
+    background-color: #FAF3DD;
     color: #333;
     transition: 0.3s ease-in-out;
     box-sizing: border-box;
@@ -163,13 +190,13 @@ button {
     transition: 0.3s;
     width: 100%;
     text-align: center;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Advent Pro', serif;
 }
 
 /* Primary Action Buttons */
 .add-ingredient-button,
 .add-step-button {
-    background-color: #FFCC4D; /* Golden Mango Yellow */
+    background-color: #FFCC4D;
     color: #2E2E2E;
     flex: 1;
     margin: 10px 0;
@@ -181,20 +208,30 @@ button {
 }
 
 /* Remove Button */
-.remove-button {
-    background-color: #D97742; /* Sunset Orange */
+.remove-step-button {
+    background-color: #6B4226;
     color: white;
     margin: 10px 0;
 }
 
-.remove-button:hover {
+.remove-step-button:hover {
+    background-color: #B96536;
+}
+
+.remove-ingredient-button{
+    background-color: #6B4226;
+    color: white;
+    margin: 10px 0;
+}
+
+.remove-ingredient-button:hover{
     background-color: #B96536;
 }
 
 /* Print and Preview Buttons */
 .print-recipe-button,
 .preview-recipe-button {
-    background-color: #6B4226; /* Warm Cocoa Brown */
+    background-color: #6B4226;
     color: #FAF3DD;
     width: 35%;
     margin: 10px 0;
@@ -251,7 +288,7 @@ button {
 
 .recipe-preview h2,
 .recipe-preview h3 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Advent Pro', serif;
     color: white;
 }
 

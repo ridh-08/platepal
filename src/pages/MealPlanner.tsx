@@ -256,15 +256,19 @@ const MealPlanner = () => {
     <DndProvider backend={HTML5Backend}>
       <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
       <nav className="navbar">
-        <img src='src/pages/platepal_logo.png' alt="PlatePal Logo" className="logo" width="133px" height="30px" /> {/* Logo added here */}
-        <h3>   </h3>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/build-recipe">Build a Recipe</Link></li>
-          <li><Link to="/meal-planner">Meal Planner</Link></li>
-          <li><Link to="/dine-like-a-local">Dine Like a Local</Link></li>
-        </ul>
-      </nav>
+                    <div className="logo-container">
+                      <img src="src\pages\platepal_logo.png" alt="Logo" className="logo" />
+                      <h3></h3>
+                    </div>
+                    <ul>
+                      <li><Link to="/">Home</Link></li>
+                      <li><Link to="/build-recipe">Build a Recipe</Link></li>
+                      <li><Link to="/search-page">Cook a Recipe</Link></li>
+                      <li><Link to="/meal-planner">Meal Planner</Link></li>
+                      <li><Link to="/dine-like-a-local">Dine Like a Local</Link></li>
+                      <li><Link to="/">👤</Link></li> {/* Last item, no underline */}
+                    </ul>
+                  </nav>
         <h1 style={{ textAlign: "center", padding: "40px", marginBottom: "10px" }}>Weekly Meal Planner</h1>
         
         <div style={{ position: "relative", marginBottom: "10px" }}>
@@ -459,15 +463,15 @@ const MealSlot = ({ dayIndex, category, meals, onDrop, adjustPortion, removeMeal
         ? meals.map((meal, index) => (
             <div key={index} className="meal-item">
               <h3>
-                <i className="fas fa-utensils" style={{ marginRight: "5px", color: "#69B645" }}></i>
+                <i className="fas fa-utensils" style={{ marginRight: "5px", color: "#69B645", textAlign:"center" }}></i>
                 {meal.strMeal}
               </h3>
-              <div className="servings" style={{ display: "flex", alignItems: "center", margin: "10px 0" }}>
-                <button onClick={() => adjustPortion(dayIndex, category, index, 1)}>+</button>
-                <span style={{ margin: "4px" }}>{meal.servings} servings</span>
-                <button onClick={() => adjustPortion(dayIndex, category, index, -1)}>-</button>
-              </div>
-              <button onClick={() => removeMeal(dayIndex, category, index)} className="remove-button" style={{ width: "100%", backgroundColor: "#69B645", color: "white" }}>
+              <div className="servings" style={{ display: "flex", alignItems: "center", justifyContent: "center", margin: "10px 0" }}>
+    <button onClick={() => adjustPortion(dayIndex, category, index, 1)} className="small-button">+</button>
+    <span style={{ margin: "0 10px", textAlign: "center" }}>{meal.servings} servings</span>
+    <button onClick={() => adjustPortion(dayIndex, category, index, -1)} className="small-button">-</button>
+</div>
+              <button onClick={() => removeMeal(dayIndex, category, index)} className="remove-button" style={{ width: "100%"}}>
                 <i className="fas fa-trash" style={{ marginRight: "5px" }}></i>
                 Remove
               </button>
